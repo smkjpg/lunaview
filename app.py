@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
 from datetime import datetime, timezone
+from pathlib import Path
 
 from calculations.sun_position import calculate_sun_position
 from calculations.earth_position import calculate_earth_position
@@ -203,9 +204,10 @@ st.markdown(
 
 
 # ==================================================
-# CANDIDATE LANDING SITES
+# CANDIDATE AND HISTORICAL LANDING SITES
 # ==================================================
 
+# The original eight south-pole candidate sites are always available.
 sites = {
     "Connecting Ridge (Site01)": (-89.4632, -137.49),
     "Shackleton Rim (Site04)": (-89.7668, -171.87),
@@ -216,6 +218,83 @@ sites = {
     "Malapert Massif (Site23)": (-85.9948, -0.23578),
     "de Gerlache-Kocher Massif (Site42)": (-85.8296, -116.322),
 }
+
+# Extra site information is retained for the comparison table.
+site_details = {
+    name: {
+        "Site ID": name.split("(")[-1].replace(")", "") if "(" in name else "",
+        "Mission": "LunaView candidate",
+        "Agency": "LunaView",
+        "Site Type": "Candidate",
+        "Status": "Proposed",
+        "Coordinate Reference": "LunaView candidate coordinates; verify frame before precision use",
+        "Source": "",
+    }
+    for name in sites
+}
+
+# Load the additional landing sites from the project CSV database.
+# Put lunar_sites.csv in data/sites/ in the repository.
+SITE_DATABASE_PATH = Path(__file__).resolve().parent / "data" / "sites" / "lunar_sites.csv"
+
+if SITE_DATABASE_PATH.exists():
+    try:
+        site_database = pd.read_csv(SITE_DATABASE_PATH)
+        required_columns = {
+            "site_id", "site_name", "mission", "agency", "site_type",
+            "status", "latitude_deg", "longitude_deg_east",
+        }
+        missing_columns = required_columns.difference(site_database.columns)
+        if missing_columns:
+            st.warning(
+                "The lunar site database is missing these columns: "
+                + ", ".join(sorted(missing_columns))
+            )
+        else:
+            for _, row in site_database.iterrows():
+                site_id = str(row["site_id"]).strip()
+
+                # Connecting Ridge is already in the original candidate list.
+                if site_id.upper() == "SITE01":
+                    continue
+
+                try:
+                    site_lat = float(row["latitude_deg"])
+                    site_lon = float(row["longitude_deg_east"])
+                except (TypeError, ValueError):
+                    continue
+
+                if not np.isfinite(site_lat) or not np.isfinite(site_lon):
+                    continue
+                if not -90 <= site_lat <= 90 or not -180 <= site_lon <= 180:
+                    continue
+
+                site_name = str(row["site_name"]).strip()
+                mission = str(row["mission"]).strip()
+                display_name = f"{site_name} — {mission}"
+
+                # Avoid duplicate labels if the CSV contains repeated records.
+                if display_name in sites:
+                    continue
+
+                sites[display_name] = (site_lat, site_lon)
+                site_details[display_name] = {
+                    "Site ID": site_id,
+                    "Mission": mission,
+                    "Agency": str(row.get("agency", "")),
+                    "Site Type": str(row.get("site_type", "")),
+                    "Status": str(row.get("status", "")),
+                    "Coordinate Reference": str(row.get("coordinate_reference", "")),
+                    "Source": str(row.get("source_url", "")),
+                }
+
+    except Exception as error:
+        st.warning(f"Additional lunar site database could not be loaded: {error}")
+else:
+    st.warning(
+        "Additional landing sites were not loaded. Make sure "
+        "data/sites/lunar_sites.csv is included in the project."
+    )
 
 
 # ==================================================
@@ -418,21 +497,40 @@ st.header("📍 Candidate Site Comparison")
 comparison_data = []
 
 for site_name, coordinates in sites.items():
-
     site_lat, site_lon = coordinates
+    details = site_details.get(site_name, {})
 
     comparison_data.append({
         "Site": site_name,
+        "Site ID": details.get("Site ID", ""),
+        "Mission": details.get("Mission", ""),
+        "Agency": details.get("Agency", ""),
+        "Site Type": details.get("Site Type", ""),
+        "Status": details.get("Status", ""),
         "Latitude": site_lat,
         "Longitude": site_lon,
+        "Coordinate Reference": details.get("Coordinate Reference", ""),
     })
 
 comparison_df = pd.DataFrame(comparison_data)
+
+st.caption(
+    f"{len(sites)} locations loaded: 8 original south-pole candidates "
+    "plus additional sites from the lunar site database, when available. "
+    "This is a location catalogue, not a landing-site safety ranking."
+)
 
 st.dataframe(
     comparison_df,
     use_container_width=True,
     hide_index=True,
+)
+
+st.caption(
+    "Coordinate references may differ between source datasets. "
+    "The plotted positions are schematic and should not be treated as "
+    "a precision geodetic comparison until all coordinates are normalized "
+    "to the same lunar reference frame."
 )
 
 fig_sites = go.Figure()
