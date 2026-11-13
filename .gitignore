@@ -2,3 +2,4 @@ __pycache__/
 *.py[cod]
 *.swp
 FETCH_HEAD
+data/terrain/*.tif
