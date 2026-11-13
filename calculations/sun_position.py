@@ -58,7 +58,7 @@ def calculate_sun_position(
         )
 
         sun_state, _ = spice.spkezr(
-            "SUN", et, "MOON_PA", "NONE", "MOON"
+            "SUN", et, "MOON_ME", "NONE", "MOON"
         )
 
         relative = [

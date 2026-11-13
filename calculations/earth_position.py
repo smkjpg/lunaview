@@ -50,7 +50,7 @@ def calculate_earth_position(
         )
 
         earth_state, _ = spice.spkezr(
-            "EARTH", et, "MOON_PA", "NONE", "MOON"
+            "EARTH", et, "MOON_ME", "NONE", "MOON"
         )
 
         relative = [
