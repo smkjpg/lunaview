@@ -1,0 +1,14 @@
+site_id,site_name,mission,agency,site_type,status,latitude_deg,longitude_deg_east,landing_date_utc,coordinate_reference,terrain_file,source_url
+SITE01,Connecting Ridge,Internal candidate,LunaView,Candidate,Proposed,-89.46320,-137.49000,,Project coordinates,Site01_elevation.tif,
+APOLLO11,Apollo 11,Mission 11,NASA,Historical landing,Completed,0.67416,23.47314,1969-07-20,DE421 Mean Earth Polar Axis,,https://nssdc.gsfc.nasa.gov/planetary/lunar/lunar_sites.html
+APOLLO12,Apollo 12,Mission 12,NASA,Historical landing,Completed,-3.0128,-23.4219,1969-11-19,DE421 Mean Earth Polar Axis,,https://nssdc.gsfc.nasa.gov/planetary/lunar/lunar_sites.html
+APOLLO14,Apollo 14,Mission 14,NASA,Historical landing,Completed,-3.64589,-17.47194,1971-02-05,DE421 Mean Earth Polar Axis,,https://nssdc.gsfc.nasa.gov/planetary/lunar/lunar_sites.html
+APOLLO15,Apollo 15,Mission 15,NASA,Historical landing,Completed,26.13239,3.63330,1971-07-30,DE421 Mean Earth Polar Axis,,https://nssdc.gsfc.nasa.gov/planetary/lunar/lunar_sites.html
+APOLLO16,Apollo 16,Mission 16,NASA,Historical landing,Completed,-8.9734,15.5011,1972-04-21,DE421 Mean Earth Polar Axis,,https://nssdc.gsfc.nasa.gov/planetary/lunar/lunar_sites.html
+APOLLO17,Apollo 17,Mission 17,NASA,Historical landing,Completed,20.1911,30.7723,1972-12-11,DE421 Mean Earth Polar Axis,,https://nssdc.gsfc.nasa.gov/planetary/lunar/lunar_sites.html
+CHANDRAYAAN3,Shiv Shakti Point,Chandrayaan-3,ISRO,Historical landing,Completed,-69.3741,32.32,2023-08-23,Source-reported,,https://nssdc.gsfc.nasa.gov/planetary/lunar/lunar_artifact_impacts.html
+SLIM,SLIM landing site,SLIM,JAXA,Historical landing,Completed,-13.3160,25.2510,2024-01-19,Source-reported,,https://nssdc.gsfc.nasa.gov/planetary/lunar/lunar_artifact_impacts.html
+ODYSSEUS,Odysseus landing site,IM-1,Intuitive Machines,Historical landing,Completed,-80.13,1.44,2024-02-22,Source-reported,,https://nssdc.gsfc.nasa.gov/planetary/lunar/lunar_artifact_impacts.html
+CHANGE6,Chang'e 6 landing site,Chang'e 6,CNSA,Historical landing,Completed,-41.6385,-153.9852,2024-06-01,Source-reported,,https://nssdc.gsfc.nasa.gov/planetary/lunar/lunar_artifact_impacts.html
+BLUEGHOST1,Blue Ghost 1 landing site,Blue Ghost 1,Firefly Aerospace,Historical landing,Completed,18.562,61.810,2025-03-02,Source-reported,,https://nssdc.gsfc.nasa.gov/planetary/lunar/lunar_artifact_impacts.html
+IM2,IM-2 landing site,IM-2,Intuitive Machines,Historical landing,Completed,-84.7906,29.1957,2025-03-06,Source-reported,,https://nssdc.gsfc.nasa.gov/planetary/lunar/lunar_artifact_impacts.html
