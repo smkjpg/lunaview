@@ -1,4 +1,3 @@
-
 import streamlit as st
 import numpy as np
 import pandas as pd
@@ -23,13 +22,183 @@ st.set_page_config(
     page_icon="🌕",
     layout="wide",
 )
+st.markdown("""
+<style>
+/* Main background */
+.stApp {
+    background: #07111f;
+    color: #f1f5f9;
+}
+
+/* General text */
+.stApp, .stApp p, .stApp label,
+.stApp li, .stApp span {
+    color: #e2e8f0;
+}
+
+/* Headings */
+.stMarkdown h1 {
+    color: #7dd3fc !important;
+}
+
+.stMarkdown h2,
+.stMarkdown h3 {
+    color: #38bdf8 !important;
+}
+
+/* Metric cards */
+[data-testid="stMetric"] {
+    background: #13243a;
+    border: 1px solid #38516e;
+    padding: 18px;
+    border-radius: 10px;
+}
+
+[data-testid="stMetricLabel"] {
+    color: #cbd5e1 !important;
+}
+
+[data-testid="stMetricValue"] {
+    color: #ffffff !important;
+}
+
+/* Captions and dividers */
+.stCaption {
+    color: #cbd5e1 !important;
+}
+
+hr {
+    border-color: #38516e;
+}
+
+/* Input controls */
+.stApp input,
+.stApp textarea,
+.stApp select,
+.stApp [data-baseweb="input"] input {
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+    background-color: #13243a !important;
+    border: 1px solid #526b88 !important;
+}
+
+.stApp input::placeholder,
+.stApp textarea::placeholder {
+    color: #bdc9d8 !important;
+}
+
+.stApp [data-baseweb="select"] > div,
+[data-baseweb="menu"] {
+    background-color: #13243a !important;
+}
+
+.stApp [data-baseweb="select"] *,
+[data-baseweb="menu"] * {
+    color: #ffffff !important;
+}
+
+/* Date and time controls are styled separately in the sidebar below. */
+
+/* Sidebar */
+[data-testid="stSidebar"] {
+    background-color: #101f32 !important;
+}
+
+[data-testid="stSidebar"] p,
+[data-testid="stSidebar"] label,
+[data-testid="stSidebar"] span,
+[data-testid="stSidebar"] div {
+    color: #f1f5f9 !important;
+}
+
+/* Date (UTC) and Time (UTC): force dark text in the actual input fields */
+[data-testid="stSidebar"] [data-testid="stDateInput"],
+[data-testid="stSidebar"] [data-testid="stTimeInput"] {
+    color-scheme: light !important;
+}
+
+[data-testid="stSidebar"] [data-testid="stDateInput"] *,
+[data-testid="stSidebar"] [data-testid="stTimeInput"] * {
+    color: #172033 !important;
+    -webkit-text-fill-color: #172033 !important;
+}
+
+[data-testid="stSidebar"] [data-testid="stDateInput"] input,
+[data-testid="stSidebar"] [data-testid="stTimeInput"] input,
+[data-testid="stSidebar"] [data-testid="stDateInput"] [data-baseweb="input"],
+[data-testid="stSidebar"] [data-testid="stTimeInput"] [data-baseweb="input"] {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+    color: #172033 !important;
+    -webkit-text-fill-color: #172033 !important;
+    border: 1px solid #8aa2bd !important;
+    opacity: 1 !important;
+    caret-color: #172033 !important;
+}
+
+[data-testid="stSidebar"] [data-testid="stDateInput"] button,
+[data-testid="stSidebar"] [data-testid="stTimeInput"] button {
+    color: #172033 !important;
+}
+
+[data-testid="stSidebar"] [data-testid="stDateInput"] svg,
+[data-testid="stSidebar"] [data-testid="stTimeInput"] svg {
+    color: #172033 !important;
+    fill: #172033 !important;
+}
+
+/* White information bars: every word is black */
+.stApp [data-testid="stAlert"],
+.stApp [data-testid="stNotification"] {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    border: 1px solid #cbd5e1 !important;
+}
+
+.stApp [data-testid="stAlert"] *,
+.stApp [data-testid="stNotification"] * {
+    color: #000000 !important;
+    -webkit-text-fill-color: #000000 !important;
+}
+
+/* Download Terrain Horizon CSV button: dark readable text */
+.stApp [data-testid="stDownloadButton"] button,
+.stApp [data-testid="stDownloadButton"] button *,
+.stApp [data-testid="stDownloadButton"] a,
+.stApp [data-testid="stDownloadButton"] a * {
+    color: #172033 !important;
+    -webkit-text-fill-color: #172033 !important;
+}
+
+.stApp [data-testid="stDownloadButton"] button,
+.stApp [data-testid="stDownloadButton"] a {
+    background-color: #ffffff !important;
+    border: 1px solid #8aa2bd !important;
+}
+
+/* Keep expanders in the dark mission-control style */
+.stApp [data-testid="stExpander"] {
+    background-color: #13243a !important;
+    border-color: #526b88 !important;
+}
+
+.stApp [data-testid="stExpander"] * {
+    color: #e2e8f0;
+}
+
+</style>
+""", unsafe_allow_html=True)
 
 st.title("🌕 LunaView")
 st.subheader("Lunar South Pole Mission Planning System")
 
-st.write(
-    "Explore lunar observation conditions, solar geometry, "
-    "Earth visibility and local terrain horizons."
+st.markdown(
+    """
+    **MISSION CONTROL / OBSERVATION PLANNER**
+
+    Evaluate solar geometry, Earth visibility and local terrain
+    conditions for candidate lunar south-pole landing sites.
+    """
 )
 
 
@@ -123,7 +292,7 @@ with col2:
 with col3:
     st.metric("Longitude", f"{longitude:.5f}°")
 
-st.write("Observation time:", utc_string)
+st.caption(f"OBSERVATION EPOCH (UTC): {utc_string}")
 
 st.divider()
 
@@ -284,7 +453,14 @@ fig_sites.add_trace(
 )
 
 fig_sites.update_layout(
-    title="Schematic Lunar South Pole Site Comparison",
+    title=dict(
+        text="Schematic Lunar South Pole Site Comparison",
+        font=dict(color="#7dd3fc", size=22),
+    ),
+    template="plotly_dark",
+    paper_bgcolor="#07111f",
+    plot_bgcolor="#07111f",
+    font=dict(color="#e2e8f0"),
     polar=dict(
         angularaxis=dict(
             direction="clockwise",
@@ -297,11 +473,6 @@ fig_sites.update_layout(
 st.plotly_chart(
     fig_sites,
     use_container_width=True,
-)
-
-st.caption(
-    "Schematic comparison only. Candidate coordinates "
-    "require independent scientific verification."
 )
 
 
@@ -318,26 +489,14 @@ TERRAIN_PATH = "data/terrain/Site01_elevation.tif"
 
 
 def extract_terrain_arrays(terrain_data):
-    """
-    Accept the existing terrain loader's dictionary or
-    tuple return format and extract x, y and elevation.
-    """
-
     if isinstance(terrain_data, dict):
-
         x = terrain_data["x"]
         y = terrain_data["y"]
         elevation = terrain_data["elevation"]
 
     elif isinstance(terrain_data, tuple):
-
         if len(terrain_data) < 3:
-            raise ValueError(
-                "Terrain loader returned fewer than three items."
-            )
-
-        # The existing loader may return:
-        # x, y, elevation, metadata
+            raise ValueError("Terrain loader returned fewer than three items.")
         x, y, elevation = terrain_data[:3]
 
     else:
@@ -356,64 +515,86 @@ def extract_terrain_arrays(terrain_data):
 if selected_site == "Connecting Ridge (Site01)":
 
     try:
-
         terrain_data = load_terrain(TERRAIN_PATH)
 
-        x, y, elevation = extract_terrain_arrays(
-            terrain_data
-        )
+        x, y, elevation = extract_terrain_arrays(terrain_data)
 
+        # 2D TERRAIN MAP
         fig_terrain = go.Figure(
             data=go.Heatmap(
                 x=x,
                 y=y,
                 z=elevation,
                 colorscale="Viridis",
-                colorbar=dict(
-                    title="Elevation (m)"
-                ),
+                colorbar=dict(title="Elevation (m)"),
             )
         )
 
         fig_terrain.update_layout(
             title="Connecting Ridge LOLA Elevation Model",
+            template="plotly_dark",
             xaxis_title="Projected X (m)",
             yaxis_title="Projected Y (m)",
+            height=600,
+        )
+
+        st.plotly_chart(fig_terrain, use_container_width=True)
+
+        col1, col2 = st.columns(2)
+
+        with col1:
+            st.metric(
+                "Terrain Minimum",
+                f"{np.nanmin(elevation):.2f} m",
+            )
+
+        with col2:
+            st.metric(
+                "Terrain Maximum",
+                f"{np.nanmax(elevation):.2f} m",
+            )
+
+        # INTERACTIVE 3D TERRAIN
+        st.subheader("Interactive 3D Lunar Terrain")
+
+        # Reduce display resolution for smoother interaction
+        step = max(1, int(max(elevation.shape) / 150))
+
+        x_3d = x[::step]
+        y_3d = y[::step]
+        z_3d = elevation[::step, ::step]
+
+        fig_3d = go.Figure(
+            data=[
+                go.Surface(
+                    x=x_3d,
+                    y=y_3d,
+                    z=z_3d,
+                    colorscale="Viridis",
+                    colorbar=dict(title="Elevation (m)"),
+                    connectgaps=False,
+                )
+            ]
+        )
+
+        fig_3d.update_layout(
+            template="plotly_dark",
             height=650,
+            scene=dict(
+                xaxis_title="Projected X (m)",
+                yaxis_title="Projected Y (m)",
+                zaxis_title="Elevation (m)",
+                aspectmode="manual",
+                aspectratio=dict(x=1, y=1, z=0.25),
+            ),
+            margin=dict(l=0, r=0, t=40, b=0),
         )
 
-        st.plotly_chart(
-            fig_terrain,
-            use_container_width=True,
-        )
-
-        st.metric(
-            "Terrain Minimum",
-            f"{np.nanmin(elevation):.2f} m",
-        )
-
-        st.metric(
-            "Terrain Maximum",
-            f"{np.nanmax(elevation):.2f} m",
-        )
+        st.plotly_chart(fig_3d, use_container_width=True)
 
     except Exception as error:
         st.error(f"Terrain loading failed: {error}")
 
-else:
-
-    st.info(
-        "Terrain elevation data is currently available only "
-        "for Connecting Ridge (Site01)."
-    )
-
-
-st.divider()
-
-
-# ==================================================
-# TERRAIN HORIZON ANALYSIS
-# ==================================================
 
 st.header("🏔️ 360° Terrain Horizon Analysis")
 
@@ -503,6 +684,10 @@ if selected_site == "Connecting Ridge (Site01)":
 
         fig_horizon.update_layout(
             title="Terrain Horizon Across 360°",
+            template="plotly_dark",
+            paper_bgcolor="#07111f",
+            plot_bgcolor="#07111f",
+            font=dict(color="#e2e8f0"),
             xaxis_title="Azimuth (degrees)",
             yaxis_title="Horizon Elevation (degrees)",
             height=550,
@@ -542,21 +727,31 @@ if selected_site == "Connecting Ridge (Site01)":
                     f"{comparison['angular_clearance_deg']:.2f}°",
                 )
 
-            if comparison["status"] == "ABOVE TERRAIN HORIZON":
+            comparison_status = comparison.get("status")
+            if comparison_status is None:
+                comparison_status = (
+                    "ABOVE TERRAIN HORIZON"
+                    if comparison["angular_clearance_deg"] > 0
+                    else "BELOW TERRAIN HORIZON"
+                )
 
+            if comparison_status == "ABOVE TERRAIN HORIZON":
                 st.success(
                     "RESULT: SUN IS ABOVE THE SAMPLED TERRAIN HORIZON"
                 )
-
             else:
-
                 st.warning(
                     "RESULT: SUN IS BELOW THE SAMPLED TERRAIN HORIZON"
                 )
 
+            horizon_azimuth = comparison.get(
+                "horizon_azimuth_deg",
+                sun_azimuth,
+            )
+
             st.caption(
-                "Nearest sampled horizon azimuth: "
-                f"{comparison['horizon_azimuth_deg']:.1f}°"
+                "Horizon comparison azimuth: "
+                f"{horizon_azimuth:.1f}°"
             )
 
         else:
@@ -600,4 +795,3 @@ else:
 
 
 st.divider()
-
