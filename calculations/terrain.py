@@ -1,15 +1,23 @@
+
 import numpy as np
 import rasterio
 from rasterio.enums import Resampling
+from pathlib import Path
 
 
-def load_terrain(path="data/terrain/Site01_elevation.tif", max_size=500):
+def load_terrain(path, max_size=500):
     """
     Load lunar elevation data and downsample it for efficient display.
-    Coordinates are in the raster's native projected coordinate system.
+    Supports both 5 m and 80 m lunar terrain datasets.
     """
 
+    path = Path(path)
+
+    if not path.exists():
+        raise FileNotFoundError(f"Terrain file not found: {path}")
+
     with rasterio.open(path) as src:
+
         scale = min(1, max_size / max(src.width, src.height))
 
         width = max(1, int(src.width * scale))
@@ -39,6 +47,8 @@ def load_terrain(path="data/terrain/Site01_elevation.tif", max_size=500):
             "crs": str(src.crs),
             "bounds": src.bounds,
             "pixel_size": src.res,
+            "resolution_m": abs(src.res[0]),
+            "source_file": path.name,
         }
 
     return x, y, elevation, metadata

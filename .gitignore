@@ -3,3 +3,9 @@ __pycache__/
 *.swp
 FETCH_HEAD
 data/terrain/*.tif
+
+# Large lunar terrain datasets (keep out of GitHub)
+data/terrain/**/*.tif
+data/terrain/**/*.tiff
+data/terrain/**/*.IMG
+data/terrain/**/*.img
