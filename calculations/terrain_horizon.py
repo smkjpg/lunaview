@@ -1,4 +1,5 @@
 
+
 import math
 
 import numpy as np
@@ -40,9 +41,9 @@ def bilinear_sample(grid, inverse_transform, x, y):
     """
     Bilinearly interpolate a raster at map coordinates.
 
-    Raster values are assumed to represent pixel-centre samples.
-    Returns NaN when interpolation is outside the raster
-    or when one of the four required pixels is invalid.
+    Raster values represent pixel-centre samples.
+    Returns NaN outside valid raster coverage or when
+    any of the four required pixels is invalid.
     """
 
     col_corner, row_corner = inverse_transform * (x, y)
@@ -119,9 +120,16 @@ def calculate_terrain_horizon(
     Uses:
         - Spherical lunar coordinates
         - Raster CRS transformation
-        - Bilinear interpolation throughout
+        - Bilinear interpolation
+        - NoData masking
         - Spherical lunar curvature geometry
     """
+
+    if not -90 <= latitude <= 90:
+        raise ValueError("Latitude must be between -90 and 90 degrees.")
+
+    if not math.isfinite(longitude):
+        raise ValueError("Longitude must be finite.")
 
     if max_distance_m <= 0:
         raise ValueError("Maximum distance must be positive.")
@@ -140,7 +148,24 @@ def calculate_terrain_horizon(
 
     with rasterio.open(terrain_path) as src:
 
-        elevation_grid = src.read(1).astype(np.float64)
+        if src.crs is None:
+            raise ValueError(
+                f"Terrain raster has no CRS: {terrain_path}"
+            )
+
+        # Read the raster as a masked array.
+        # This prevents NoData values such as -9999
+        # from being interpreted as actual terrain.
+        masked_elevation = src.read(
+            1,
+            masked=True,
+        )
+
+        elevation_grid = np.ma.filled(
+            masked_elevation.astype(np.float64),
+            np.nan,
+        )
+
         inverse_transform = ~src.transform
 
         transformer = Transformer.from_crs(
@@ -263,7 +288,7 @@ def calculate_terrain_horizon(
             })
 
     return {
-        "observer_elevation_m": observer_elevation,
+        "observer_elevation_m": float(observer_elevation),
         "horizon_profile": horizon_profile,
         "max_distance_m": float(max_distance_m),
         "distance_step_m": float(distance_step_m),

@@ -2,10 +2,15 @@ __pycache__/
 *.py[cod]
 *.swp
 FETCH_HEAD
-data/terrain/*.tif
 
-# Large lunar terrain datasets (keep out of GitHub)
+# Ignore original large terrain datasets
+data/terrain/*.tif
 data/terrain/**/*.tif
 data/terrain/**/*.tiff
 data/terrain/**/*.IMG
 data/terrain/**/*.img
+
+# Allow compact deployment terrain tiles
+!data/terrain/deployment/
+!data/terrain/deployment/**/*.tif
+!data/terrain/deployment/**/*.tiff

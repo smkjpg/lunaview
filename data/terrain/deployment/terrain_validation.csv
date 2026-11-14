@@ -1,0 +1,33 @@
+site_id,terrain,width,height,valid_percent,observer_valid,elevation_mb,slope_exists,status
+SITE01,high-resolution 5 m,2203,2203,100.0,True,9.46,True,REVIEW
+SITE04,high-resolution 5 m,2203,2203,100.0,True,10.14,True,REVIEW
+SITE06,high-resolution 5 m,2203,2203,100.0,True,7.69,True,REVIEW
+SITE07,high-resolution 5 m,2203,2203,100.0,True,9.43,True,REVIEW
+SITE11,high-resolution 5 m,2203,2203,100.0,True,9.85,True,REVIEW
+SITE20,high-resolution 5 m,2203,2203,100.0,True,7.67,True,REVIEW
+SITE23,high-resolution 5 m,2203,2203,100.0,True,8.2,True,REVIEW
+SITE42,high-resolution 5 m,2203,2203,100.0,True,8.4,True,REVIEW
+SITE09,south-polar 80 m,141,140,100.0,True,0.05,True,REVIEW
+SITE10,south-polar 80 m,141,141,100.0,True,0.05,True,REVIEW
+SITE12,south-polar 80 m,140,140,100.0,True,0.05,True,REVIEW
+SITE15,south-polar 80 m,140,141,100.0,True,0.05,True,REVIEW
+SITE18,south-polar 80 m,140,141,100.0,True,0.05,True,REVIEW
+SITE25,south-polar 80 m,141,141,100.0,True,0.06,True,REVIEW
+SITE30,south-polar 80 m,141,140,100.0,True,0.05,True,REVIEW
+SITE32,south-polar 80 m,140,140,100.0,True,0.05,True,REVIEW
+SITE35,south-polar 80 m,140,140,100.0,True,0.05,True,REVIEW
+SITE38,south-polar 80 m,141,141,100.0,True,0.05,True,REVIEW
+SITE40,south-polar 80 m,141,140,100.0,True,0.05,True,REVIEW
+SITE45,south-polar 80 m,140,141,100.0,True,0.06,True,REVIEW
+APOLLO11,global LOLA,26,26,100.0,True,0.0,True,REVIEW
+APOLLO12,global LOLA,26,26,100.0,True,0.0,True,REVIEW
+APOLLO14,global LOLA,26,26,100.0,True,0.0,True,REVIEW
+APOLLO15,global LOLA,29,27,100.0,True,0.0,True,REVIEW
+APOLLO16,global LOLA,26,26,100.0,True,0.0,True,REVIEW
+APOLLO17,global LOLA,27,26,100.0,True,0.0,True,REVIEW
+CHANDRAYAAN3,global LOLA,69,26,100.0,True,0.0,True,REVIEW
+SLIM,global LOLA,26,26,100.0,True,0.0,True,REVIEW
+ODYSSEUS,global LOLA,138,26,100.0,True,0.0,True,REVIEW
+CHANGE6,global LOLA,34,26,100.0,True,0.0,True,REVIEW
+BLUEGHOST1,global LOLA,28,26,100.0,True,0.0,True,REVIEW
+IM2,global LOLA,259,27,100.0,True,0.01,True,REVIEW
